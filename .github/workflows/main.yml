@@ -36,6 +36,7 @@ jobs:
           haxelib install hxargs --quiet
           haxelib install haxe-files --quiet
           haxelib install hxcpp --quiet
+          haxelib install hxjava --quiet
           haxelib dev hunter ${{ github.workspace }}
       - name: Build targets
         run: |
