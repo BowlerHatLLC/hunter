@@ -10,7 +10,7 @@ Use the [**haxelib install**](https://lib.haxe.org/documentation/using-haxelib/#
 haxelib install hunter
 ```
 
-Requires Haxe 4.0 or newer.
+Requires Haxe 4.2 or newer.
 
 ## Command Line
 
