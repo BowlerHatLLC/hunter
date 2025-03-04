@@ -14,12 +14,13 @@
 
 package hunter;
 
+import haxe.MainLoop;
 import haxe.io.Eof;
-import sys.io.Process;
 import hx.concurrent.executor.Executor;
 import hx.files.watcher.PollingFileWatcher;
 import hxargs.Args;
 import sys.FileSystem;
+import sys.io.Process;
 
 /**
 	Run `haxelib run hunter <command> [...directory] [OPTIONS]` to start
@@ -195,6 +196,10 @@ class Run {
 			executor.submit(commandJob, ONCE(wait + pollingInterval));
 		}
 		// run the command once immediately on startup
-		commandJob();
+		executor.submit(commandJob, ONCE(0));
+
+		MainLoop.add(() -> {
+			// this keeps the process from exiting
+		});
 	}
 }
