@@ -1,0 +1,43 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  haxelib:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/upload-artifact@v4
+        with:
+          name: hunter-haxelib
+          path: |
+            src/
+            haxelib.json
+            README.md
+            LICENSE
+            CHANGELOG.md
+          if-no-files-found: error
+  build:
+    strategy:
+      matrix:
+        haxe-version: [4.2.5, 4.3.5]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: krdlab/setup-haxe@v1
+        with:
+          haxe-version: ${{ matrix.haxe-version }}
+      - name: Set up Haxelib dependencies
+        run: |
+          haxelib install hxargs --quiet
+          haxelib install haxe-files --quiet
+          haxelib install hxcpp --quiet
+          haxelib dev hunter ${{ github.workspace }}
+      - name: Build targets
+        run: |
+          haxe build.hxml --neko bin/hunter.n
+          haxe build.hxml --cpp bin/hunter

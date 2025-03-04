@@ -1,0 +1,16 @@
+{
+  "name": "hunter",
+  "url": "https://bowlerhat.dev/",
+  "license": "Apache",
+  "tags": ["file-watcher"],
+  "description": "Watches for file changes to specific directories and re-runs a command",
+  "version": "1.0.0",
+  "classPath": "src",
+  "main": "hunter.Run",
+  "dependencies": {
+    "hxargs": "",
+    "haxe-files": ""
+  },
+  "contributors": ["bowlerhat"],
+  "releasenote": "See CHANGELOG"
+}

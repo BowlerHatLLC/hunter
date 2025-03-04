@@ -1,0 +1,4 @@
+--main hunter.Run
+-cp src
+-lib hxargs
+-lib haxe-files
