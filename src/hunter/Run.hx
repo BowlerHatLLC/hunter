@@ -115,7 +115,7 @@ class Run {
 		var executor = Executor.create();
 		var fileWatcher = new PollingFileWatcher(executor, pollingInterval);
 
-		var commandPending = false;
+		var commandPending:Bool = true;
 		fileWatcher.subscribe(function(event) {
 			switch (event) {
 				case DIR_CREATED(dir):
@@ -158,13 +158,17 @@ class Run {
 			fileWatcher.watch(directory);
 		}
 
+		var firstRun:Bool = true;
 		function commandJob():Void {
 			if (!commandPending) {
 				executor.submit(commandJob, ONCE(pollingInterval));
 				return;
 			}
 			if (!silent) {
-				Sys.println("Change detected...");
+				if (!firstRun) {
+					Sys.println("Change detected...");
+				}
+				Sys.println("Running command: " + command);
 			}
 			var process = new Process(command);
 			process.exitCode(true);
@@ -187,8 +191,10 @@ class Run {
 				Sys.stderr().flush();
 			}
 			commandPending = false;
+			firstRun = false;
 			executor.submit(commandJob, ONCE(wait + pollingInterval));
 		}
-		executor.submit(commandJob, ONCE(pollingInterval));
+		// run the command once immediately on startup
+		commandJob();
 	}
 }
