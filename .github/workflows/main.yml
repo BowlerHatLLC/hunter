@@ -40,4 +40,8 @@ jobs:
       - name: Build targets
         run: |
           haxe build.hxml --neko bin/hunter.n
-          haxe build.hxml --cpp bin/hunter
+          haxe build.hxml --hl bin/hunter.hl
+          haxe build.hxml --jvm bin/hunter.jar
+          haxe build.hxml --php bin/hunter_php
+          haxe build.hxml --python bin/hunter.py
+          haxe build.hxml --cpp bin/hunter_cpp
