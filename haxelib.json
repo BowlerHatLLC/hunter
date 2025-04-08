@@ -9,7 +9,7 @@
   "main": "hunter.Run",
   "dependencies": {
     "hxargs": "",
-    "haxe-files": ""
+    "haxe-concurrent": ""
   },
   "contributors": ["bowlerhat"],
   "releasenote": "See CHANGELOG"

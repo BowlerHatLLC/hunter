@@ -17,7 +17,7 @@ package hunter;
 import haxe.MainLoop;
 import haxe.io.Eof;
 import hx.concurrent.executor.Executor;
-import hx.files.watcher.PollingFileWatcher;
+import hunter._internal.PollingFileWatcher;
 import hxargs.Args;
 import sys.FileSystem;
 import sys.io.Process;
@@ -118,34 +118,35 @@ class Run {
 
 		var commandPending:Bool = true;
 		fileWatcher.subscribe(function(event) {
+			trace(event);
 			switch (event) {
-				case DIR_CREATED(dir):
-					if (ignoreDotFiles && StringTools.startsWith(dir.path.toString(), ".")) {
+				case DIR_CREATED(dirPath):
+					if (ignoreDotFiles && StringTools.startsWith(dirPath, ".")) {
 						return;
 					}
 					commandPending = true;
-				case DIR_DELETED(dir):
-					if (ignoreDotFiles && StringTools.startsWith(dir.path.toString(), ".")) {
+				case DIR_DELETED(dirPath):
+					if (ignoreDotFiles && StringTools.startsWith(dirPath, ".")) {
 						return;
 					}
 					commandPending = true;
-				case DIR_MODIFIED(dir, _):
-					if (ignoreDotFiles && StringTools.startsWith(dir.path.toString(), ".")) {
+				case DIR_MODIFIED(dirPath, _):
+					if (ignoreDotFiles && StringTools.startsWith(dirPath, ".")) {
 						return;
 					}
 					commandPending = true;
-				case FILE_CREATED(file):
-					if (ignoreDotFiles && StringTools.startsWith(file.path.toString(), ".")) {
+				case FILE_CREATED(filePath):
+					if (ignoreDotFiles && StringTools.startsWith(filePath, ".")) {
 						return;
 					}
 					commandPending = true;
-				case FILE_DELETED(file):
-					if (ignoreDotFiles && StringTools.startsWith(file.path.toString(), ".")) {
+				case FILE_DELETED(filePath):
+					if (ignoreDotFiles && StringTools.startsWith(filePath, ".")) {
 						return;
 					}
 					commandPending = true;
-				case FILE_MODIFIED(file, _):
-					if (ignoreDotFiles && StringTools.startsWith(file.path.toString(), ".")) {
+				case FILE_MODIFIED(filePath, _):
+					if (ignoreDotFiles && StringTools.startsWith(filePath, ".")) {
 						return;
 					}
 					commandPending = true;
